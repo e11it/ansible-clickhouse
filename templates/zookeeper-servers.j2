@@ -9,5 +9,8 @@
 {% endfor %}
     </node>
 {% endfor %}
+    {% if clickhouse_zookeeper_user is defined %}
+    <identity>{{clickhouse_zookeeper_user}}:{{clickhouse_zookeeper_password}}</identity>
+    {% endif %}
   </zookeeper>
 </yandex>
