@@ -2,17 +2,17 @@
 <!-- {{ ansible_managed }} -->
 <yandex>
   <remote_servers>
-{% for shard_name, replicas in clickhouse_shards.items() %}
+{% for shard_name, shards in clickhouse_shards.items() %}
     <{{ shard_name }}>
+    {% for shard in shards %}
       <shard>
         <internal_replication>true</internal_replication>
-{% for replica in replicas %}
         <replica>
-          <host>{{ replica['host'] }}</host>
-          <port>{{ replica['port'] | default(9000) }}</port>
+          <host>{{ shard['host'] }}</host>
+          <port>{{ shard['port'] | default(9000) }}</port>
         </replica>
-{% endfor %}
       </shard>
+    {% endfor %}
     </{{ shard_name }}>
 {% endfor %}
   </remote_servers>
