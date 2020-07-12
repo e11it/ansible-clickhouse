@@ -178,6 +178,7 @@
     <!-- Reloading interval for embedded dictionaries, in seconds. Default: 3600. -->
     <builtin_dictionaries_reload_interval>{{ clickhouse_config.builtin_dictionaries_reload_interval }}</builtin_dictionaries_reload_interval>
 
+    <max_insert_threads>4</max_insert_threads>
 
     <!-- Maximum session timeout, in seconds. Default: 3600. -->
     <max_session_timeout>{{ clickhouse_config.max_session_timeout }}</max_session_timeout>
@@ -308,7 +309,6 @@
          Don't do that if you just started using ClickHouse.
       -->
     <compression incl="clickhouse_compression">
-    <!--
         <!- - Set of variants. Checked in order. Last matching case wins. If nothing matches, lz4 will be used. - ->
         <case>
 
@@ -319,7 +319,6 @@
             <!- - What compression method to use. - ->
             <method>zstd</method>
         </case>
-    -->
     </compression>
 
     <!-- Allow to execute distributed DDL queries (CREATE, DROP, ALTER, RENAME) on cluster.
