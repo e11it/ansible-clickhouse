@@ -6,6 +6,13 @@
     state: restarted
   become: true
 
+- name: restart-ch-systemd
+  systemd:
+    name: clickhouse-server
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
 - name: reload systemd daemon
   systemd:
     daemon_reload: true

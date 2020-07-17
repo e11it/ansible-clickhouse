@@ -8,19 +8,19 @@
         <value>nn1,nn2</value>
     </property>
     <property>
-        <name>dfs.namenode.rpc-address.ns.nn1</name>
+        <name>dfs.namenode.rpc-address.{{ clcikhouse_hdfs_nameservices }}.nn1</name>
         <value>{{ clickhouse_hdfs_nn1 }}:{{ clickhouse_hdfs_rpc_port }}</value>
     </property>
     <property>
-        <name>dfs.namenode.http-address.ns.nn1</name>
+        <name>dfs.namenode.http-address.{{ clcikhouse_hdfs_nameservices }}.nn1</name>
         <value>{{ clickhouse_hdfs_nn1 }}:{{ clickhouse_hdfs_http_port }}</value>
     </property>
     <property>
-        <name>dfs.namenode.rpc-address.ns.nn2</name>
+        <name>dfs.namenode.rpc-address.{{ clcikhouse_hdfs_nameservices }}.nn2</name>
         <value>{{ clickhouse_hdfs_nn2 }}:{{ clickhouse_hdfs_rpc_port }}</value>
     </property>
     <property>
-        <name>dfs.namenode.http-address.ns.nn2</name>
+        <name>dfs.namenode.http-address.{{ clcikhouse_hdfs_nameservices }}.nn2</name>
         <value>{{ clickhouse_hdfs_nn2 }}:{{ clickhouse_hdfs_http_port }}</value>
     </property>
 </configuration>

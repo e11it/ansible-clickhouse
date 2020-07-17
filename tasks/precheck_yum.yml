@@ -26,7 +26,7 @@
   when: ansible_service_mgr == 'systemd'
   tags: [install]
   notify:
-    - restart-ch
+    - restart-ch-systemd
 
 - name: "Create systemd config"
   template:
@@ -39,5 +39,4 @@
   when: ansible_service_mgr == 'systemd'
   tags: [install]
   notify:
-    - reload systemd daemon
-    - restart-ch
+    - restart-ch-systemd
