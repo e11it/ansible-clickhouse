@@ -95,3 +95,11 @@ clickhouse_kafka_config: []
 clickhouse_kafka_topics_config: []
 
 clickhouse_merge_tree_config: []
+
+# HDFS
+clickhouse_generate_hdfs_confg: false
+clcikhouse_hdfs_nameservices: ns
+clickhouse_hdfs_nn1: master1
+clickhouse_hdfs_nn2: master2
+clickhouse_hdfs_rpc_port: 8020
+clickhouse_hdfs_http_port: 50070

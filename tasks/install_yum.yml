@@ -39,6 +39,20 @@
   tags: [install]
   when: clickhouse_version != "*"
 
+- name: "Create systemd config"
+  template:
+    src: "clickhouse-server.service.j2"
+    dest: "/etc/systemd/system/clickhouse-server.service"
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+  when: ansible_service_mgr == 'systemd'
+  tags: [install]
+  notify:
+    - systemd daemon reload
+    - restart-ch
+
 - name: Install by YUM | Ensure clickhouse enabled and started by Systemd
   systemd:
     name: clickhouse-server
