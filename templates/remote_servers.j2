@@ -10,6 +10,8 @@
         <replica>
           <host>{{ shard['host'] }}</host>
           <port>{{ shard['port'] | default(9000) }}</port>
+          <user>default</user>
+          <password>{{clickhouse_users_default_password}}</password>
         </replica>
       </shard>
     {% endfor %}
