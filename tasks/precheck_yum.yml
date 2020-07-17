@@ -39,5 +39,5 @@
   when: ansible_service_mgr == 'systemd'
   tags: [install]
   notify:
-    - systemd daemon reload
+    - reload systemd daemon
     - restart-ch
