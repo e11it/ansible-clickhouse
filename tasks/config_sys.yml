@@ -67,6 +67,17 @@
     mode: 0644
   notify: restart-ch
   become: true
-  when: clickhouse_zookeeper_nodes is defined 
+  when: clickhouse_zookeeper_nodes is defined
+
+- name: Config | Generate hdfs-client servers config
+  template:
+    src: hdfs-client.xml.j2
+    dest: "{{ clickhouse_path_configdir }}/hdfs-client.xml"
+    owner: clickhouse
+    group: clickhouse
+    mode: 0644
+  notify: restart-ch
+  become: true
+  when: clickhouse_generate_hdfs_confg
 
 - meta: flush_handlers

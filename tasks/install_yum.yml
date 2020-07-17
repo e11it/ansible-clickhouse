@@ -39,6 +39,19 @@
   tags: [install]
   when: clickhouse_version != "*"
 
+- name: "Create systemd env config"
+  template:
+    src: "clickhouse-server.env.j2"
+    dest: "/etc/default/clickhouse-server"
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+  when: ansible_service_mgr == 'systemd'
+  tags: [install]
+  notify:
+    - restart-ch
+
 - name: "Create systemd config"
   template:
     src: "clickhouse-server.service.j2"
