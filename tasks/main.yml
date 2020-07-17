@@ -25,6 +25,7 @@
 
 - name: Wait DBMS ready
   command: sleep 1
+  changed_when: false
 
 - include: config_db.yml
   when: clickhouse_rt_is_installed.rc == 0 and clickhouse_remove|bool == False
