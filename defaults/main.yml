@@ -90,6 +90,8 @@ clickhouse_path_base: "/var/lib"
 
 clickhouse_path_user_files: "{{ clickhouse_path_base }}/clickhouse/user_files/"
 
+clickhouse_access_control_path: "{{ clickhouse_path_base }}/clickhouse/access/"
+
 clickhouse_mlock_status: false
 
 clickhouse_kafka_config: []

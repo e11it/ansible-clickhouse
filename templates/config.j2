@@ -101,12 +101,25 @@
 
     <!-- Path to data directory, with trailing slash. -->
     <path>{{ clickhouse_path_data }}</path>
-
+    
     <!-- Path to temporary data for processing hard queries. -->
     <tmp_path>{{ clickhouse_path_tmp }}</tmp_path>
 
+    <!-- Policy from the <storage_configuration> for the temporary files.
+         If not set <tmp_path> is used, otherwise <tmp_path> is ignored.
+         Notes:
+         - move_factor              is ignored
+         - keep_free_space_bytes    is ignored
+         - max_data_part_size_bytes is ignored
+         - you must have exactly one volume in that policy
+    -->
+    <!-- <tmp_policy>tmp</tmp_policy> -->
+
     <!-- Directory with user provided files that are accessible by 'file' table function. -->
     <user_files_path>{{ clickhouse_path_user_files }}</user_files_path>
+    
+    <!-- Path to folder where users and roles created by SQL commands are stored. -->
+    <access_control_path>{{ clickhouse_access_control_path }}</access_control_path>
 
     <!-- Path to configuration file with users, access rights, profiles of settings, quotas. -->
     <users_config>users.xml</users_config>
