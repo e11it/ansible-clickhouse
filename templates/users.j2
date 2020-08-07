@@ -52,6 +52,10 @@
         {% endfor %}
         </allow_databases>
         {% endif %}
+        {% if user.access_management is defined %}
+        <!-- User can create other users and grant rights to them. -->
+        <access_management>{{ user.access_management }}</access_management> -->
+        {% endif %}
     </{{ user.name }}>
     {% endfor %}
     <!-- Custom users. -->
