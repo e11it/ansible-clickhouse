@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<!-- {{ ansible_managed }} -->
+{{ ansible_managed | comment('xml') }}
 <yandex>
   <remote_servers>
-{% for shard_name, shards in clickhouse_shards.items() %}
+{% for shard_name, replicas in clickhouse_shards.items() | list %}
     <{{ shard_name }}>
     {% for shard in shards %}
       <shard>

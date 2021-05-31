@@ -1,18 +1,6 @@
 ---
 # handlers file for clickhouse
-- name: restart-ch
-  service:
-    name: "clickhouse-server"
-    state: restarted
-  become: true
-
-- name: restart-ch-systemd
-  systemd:
-    name: clickhouse-server
-    state: restarted
-    enabled: yes
-    daemon_reload: yes
-
-- name: reload systemd daemon
-  systemd:
-    daemon_reload: true
+- name: "Restart Clickhouse Service"
+  set_fact:
+    clickhouse_service_ensure: "restarted"
+  listen: 'restart-ch'

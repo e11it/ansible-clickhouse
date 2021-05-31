@@ -1,22 +1,25 @@
 ---
 # defaults file for clickhouse
 
-clickhouse_version: "*"
+clickhouse_version: 'latest'
+clickhouse_service_ensure: 'started'
+clickhouse_service_enable: true
 
 #Flag for using with requirements check
-clickhouse_supported: no
+clickhouse_supported: false
 #Type of installation (package,source)
-clickhouse_setup: package
+clickhouse_setup: 'package'
 #Flag for remove clickhouse from host(disabled by default)
-clickhouse_remove: no
+clickhouse_remove: false
 #Flag for full remove(incl db and config), use clickhouse_remove + clickhouse_remove_full
-clickhouse_remove_full: no
+clickhouse_remove_full: false
 
 clickhouse_profiles_default:
  default:
    max_memory_usage: 10000000000
    use_uncompressed_cache: 0
    load_balancing: random
+   max_partitions_per_insert_block: 100
  readonly:
    readonly: 1
 
@@ -46,8 +49,11 @@ clickhouse_users_default_password: ""
 clickhouse_users_readonly_password: ""
 
 clickhouse_users_default:
-  - { name: "default", password: "{{ clickhouse_users_default_password }}", networks: "{{ clickhouse_networks_default }}", profile: "default", quota: "default", access_management: 1, comment: "Default user for login if user not defined" }
-  - { name: "readonly", password: "{{ clickhouse_users_readonly_password }}", networks: "{{ clickhouse_networks_default }}", profile: "default", quota: "default", comment: "Example of user with readonly access" }
+  - { name: "default", password: "", networks: "{{ clickhouse_networks_default }}", profile: "default", quota: "default", comment: "Default user for login if user not defined" }
+  - { name: "readonly", password: "", networks: "{{ clickhouse_networks_default }}", profile: "readonly", quota: "default", comment: "Example of user with readonly access" }
+
+clickhouse_ready_retries: 3
+clickhouse_ready_delay: 5
 
 #Full form { name:'<username>', password: '<plainpassword>', password_sha256_hex: '<sha256password>',
 #   networks:"<{} with nets>", profile:'<profile>', quota:'<quota>', dbs: '{} with dbs', comment: '<some comment>'}
@@ -55,10 +61,10 @@ clickhouse_users_default:
 clickhouse_users_custom: {}
 
 clickhouse_quotas_intervals_default:
- - { duration: 3600, queries: 0, errors: 0,result_rows: 0,read_rows: 0,execution_time: 0 }
+  - { duration: 3600, queries: 0, errors: 0, result_rows: 0, read_rows: 0, execution_time: 0 }
 
 clickhouse_quotas_default:
- - { name: "default", intervals: "{{ clickhouse_quotas_intervals_default }}",comment: "Default quota - count only" }
+ - { name: "default", intervals: "{{ clickhouse_quotas_intervals_default }}", comment: "Default quota - count only" }
 
 clickhouse_quotas_custom: {}
 
@@ -74,6 +80,8 @@ clickhouse_logger:
   size: 1000M
   count: 10
 
+clickhouse_config_dictionaries_lazy_load: true
+
 clickhouse_config:
   max_connections: 2048
   keep_alive_timeout: 3
@@ -81,6 +89,7 @@ clickhouse_config:
   uncompressed_cache_size: 8589934592
   mark_cache_size: 5368709120
   builtin_dictionaries_reload_interval: 3600
+  dictionaries_lazy_load: "{{ clickhouse_config_dictionaries_lazy_load }}"
   max_session_timeout: 3600
   default_session_timeout: 60
 

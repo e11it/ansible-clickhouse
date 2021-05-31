@@ -1,6 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 <?xml version="1.0"?>
-<!-- {{ ansible_managed }} -->
+{{ ansible_managed | comment('xml') }} 
 <yandex>
     <logger>
         <!-- Possible levels: https://github.com/pocoproject/poco/blob/develop/Foundation/include/Poco/Logger.h#L105 -->
@@ -186,6 +186,10 @@
 
     <!-- Reloading interval for embedded dictionaries, in seconds. Default: 3600. -->
     <builtin_dictionaries_reload_interval>{{ clickhouse_config.builtin_dictionaries_reload_interval }}</builtin_dictionaries_reload_interval>
+
+    <!-- If true, dictionaries are created lazily on first use. Otherwise they are initialised on server startup. Default: true -->
+    <!-- See also: https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server_configuration_parameters-dictionaries_lazy_load -->
+    <dictionaries_lazy_load>{{ clickhouse_config.dictionaries_lazy_load }}</dictionaries_lazy_load>
 
     <!-- Maximum session timeout, in seconds. Default: 3600. -->
     <max_session_timeout>{{ clickhouse_config.max_session_timeout }}</max_session_timeout>
@@ -407,6 +411,36 @@
         </{{ tag }}>
     {% endfor %}
     </graphite_rollup>
+{% endif %}
+
+    <!-- Exposing metrics data for scraping from Prometheus. -->
+    <!--
+        endpoint – HTTP endpoint for scraping metrics by prometheus server. Start from ‘/’.
+        port – Port for endpoint.
+        metrics – Flag that sets to expose metrics from the system.metrics table.
+        events – Flag that sets to expose metrics from the system.events table.
+        asynchronous_metrics – Flag that sets to expose current metrics values from the system.asynchronous_metrics table.
+    -->
+    <!--
+    <prometheus>
+        <endpoint>/metrics</endpoint>
+        <port>8001</port>
+        <metrics>true</metrics>
+        <events>true</events>
+        <asynchronous_metrics>true</asynchronous_metrics>
+    </prometheus>
+    -->
+
+{% if clickhouse_prometheus is defined %}
+{% for prometheus in clickhouse_prometheus %}
+    <prometheus>
+        <endpoint>{{ prometheus.endpoint }}</endpoint>
+        <port>{{ prometheus.port }}</port>
+        <metrics>{{ prometheus.metrics }}</metrics>
+        <events>{{ prometheus.events }}</events>
+        <asynchronous_metrics>{{ prometheus.asynchronous_metrics }}</asynchronous_metrics>
+    </prometheus>
+{% endfor %}
 {% endif %}
 
     <!-- Directory in <clickhouse-path> containing schema files for various input formats.

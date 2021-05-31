@@ -1,5 +1,9 @@
-ansible-clickhouse [![Build Status](https://travis-ci.org/AlexeySetevoi/ansible-clickhouse.svg?branch=master)](https://travis-ci.org/AlexeySetevoi/ansible-clickhouse)
+ansible-clickhouse 
 =========
+![Build Status](https://github.com/alexeysetevoi/ansible-clickhouse/actions/workflows/ci.yml/badge.svg?branch=master)
+[![Build Status](https://travis-ci.org/AlexeySetevoi/ansible-clickhouse.svg?branch=master)](https://travis-ci.org/github/AlexeySetevoi/ansible-clickhouse)
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/alexeysetevoi/ansible-clickhouse)](https://galaxy.ansible.com/alexeysetevoi/clickhouse)
+[![Ansible Galaxy](https://img.shields.io/badge/role-alexeysetevoi.clickhouse-blue.svg)](https://galaxy.ansible.com/alexeysetevoi/clickhouse/)
 
 Simple clickhouse-server deploy and management role.
 Any issues and pr are welcome.
@@ -101,7 +105,12 @@ clickhouse_dbs_custom:
       - { name: testu2 }
       - { name: testu3 }
       - { name: testu4, state: absent }
-      - { name: testu4, state: present }
+      - { name: testu5, state: present }
+      - { name: testu6, state: absent, cluster: testu6 }
+      - { name: testu7, state: present, cluster: testu7 }
+      - { name: testu8, state: absent, cluster: testu8, engine: Lazy(3600) }
+      - { name: testu9, state: present, cluster: testu9, engine: Lazy(3600) }
+
 ```
 
 F: You can create dictionary via odbc
