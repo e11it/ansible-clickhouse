@@ -1,5 +1,5 @@
 ---
-- name: Check clickhouse config, data and logs
+- name: Config | Check clickhouse config, data and logs
   file:
     dest: "{{ item }}"
     owner: "{{ clickhouse_user | default('clickhouse') }}"
@@ -85,3 +85,23 @@
   notify: restart-ch
   become: true
   when: clickhouse_generate_hdfs_confg
+
+- name: Config | Check /root/clickhouse-client
+  file:
+    dest: "/root/clickhouse-client"
+    owner: "root"
+    group: "root"
+    mode: 0700
+    state: directory
+  become: true
+  when: clickhouse_root_client_config
+
+- name: Config | Generate client config
+  template:
+    src: clickhouse-client-config.xml.j2
+    dest: "/root/clickhouse-client/config.xml"
+    owner: root
+    group: root
+    mode: 0600
+  become: true
+  when: clickhouse_root_client_config
